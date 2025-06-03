@@ -1,0 +1,315 @@
+ports:
+  port0:
+    fu0: INTALU
+    fu1: INTDIV
+    fu2: FPMUL
+    fu3: FPDIV
+    fu4: BRU
+    fu5: FMA
+  port1:
+    fu0: INTALU
+    fu1: INTMUL
+    fu2: FPALU
+    fu3: FPMUL
+    fu4: FMA
+  port2:
+    fu0: AGU
+    fu0: LU # load data
+  port3:
+    fu0: AGU
+    fu0: LU
+  port4:
+    fu0: SU # store data
+  port5:
+    fu0: INTALU
+    fu6: PACK
+  port6:
+    fu0: INTALU
+    fu1: BRU
+    fu6: PACK
+  port7:
+    fu0: AGU
+not_pipeline_fu:
+  - INTALU
+  - INTDIV
+  - FPMUL
+  - FPDIV
+  - FPALU
+  - BRU
+  - INTMUL
+  - AGU
+  - LU
+  - SU
+instructions:
+  ret:
+    ports: 1*6+1*23+1*0156
+    fu: BRU+AGU+ALU
+    opcode_num: 1
+    runtime_cycles: 7
+  br: #TODO: cond and uncond
+    ports: "06"
+    fu: BRU
+    opcode_num: 2
+    runtime_cycles: 1
+  switch: #TODO: this is dynamic, but not one comp and one br
+    ports:  1*06+1*0156
+    fu: 
+      - BRU+INTALU
+    opcode_num: 3
+    runtime_cycles: 2
+  indirectbr:
+    ports: "06"
+    fu: BRU
+    opcode_num: 4
+    runtime_cycles: 1
+  # invoke:
+  #   ports: "12"
+  #   opcode_num: 5
+  #   runtime_cycles: 1
+  # resume:
+  #   ports: "12"
+  #   opcode_num: 6
+  #   runtime_cycles: 1
+  unreachable:
+    ports: "06"
+    fu: BRU
+    opcode_num: 7
+    runtime_cycles: 0
+  fneg: # xorps/fchs in x86
+    ports: "5"
+    fu: INTALU
+    opcode_num: 12
+    runtime_cycles: 1
+  add:
+    ports: "0156"
+    fu: INTALU
+    opcode_num: 13 
+    runtime_cycles: 1
+  fadd:
+    ports: "1"
+    fu: 
+      - FPALU
+    opcode_num: 14 
+    runtime_cycles: 3
+  sub:
+    ports: "0156"
+    fu: INTALU
+    opcode_num: 15
+    runtime_cycles: 1
+  fsub:
+    ports: "1"
+    fu: 
+      - FPALU
+    opcode_num: 16
+    runtime_cycles: 3
+  mul:
+    ports: "1"
+    fu: INTALU
+    opcode_num: 17
+    runtime_cycles: 3
+  fmul:
+    ports: "01"
+    fu: 
+      - FPMUL
+      - FMA  # try to use fma if fp mul is not avaliable
+    opcode_num: 18
+    runtime_cycles: 3
+  udiv:
+    ports: 11*0
+    fu: INTDIV
+    opcode_num: 19
+    runtime_cycles: 80
+  sdiv:
+    ports: 11*0 # 1*0 + 10 * 8
+    fu: INTDIV
+    opcode_num: 20
+    runtime_cycles: 25
+  fdiv:
+    ports: 1*0
+    fu: FPDIV
+    opcode_num: 21
+    runtime_cycles: 12
+  urem: # same as div
+    ports: 11*0
+    fu: INTDIV
+    opcode_num: 22
+    runtime_cycles: 80
+  srem:
+    ports: 11*0
+    fu: INTDIV
+    opcode_num: 23
+    runtime_cycles: 25
+  frem:
+    ports: 1*0
+    fu: FPDIV
+    opcode_num: 24
+    runtime_cycles: 12
+  shl:
+    ports: "06"
+    fu: INTALU
+    opcode_num: 25
+    runtime_cycles: 1
+  lshr:
+    ports: "06"
+    fu: INTALU
+    opcode_num: 26
+    runtime_cycles: 1
+  ashr:
+    ports: "06"
+    fu: INTALU
+    opcode_num: 27
+    runtime_cycles: 1
+  and:
+    ports: "0156"
+    fu: INTALU
+    opcode_num: 28
+    runtime_cycles: 1
+  or:
+    ports: "0156"
+    fu: INTALU
+    opcode_num: 29
+    runtime_cycles: 1
+  xor:
+    ports: "0156"
+    fu: INTALU
+    opcode_num: 30
+    runtime_cycles: 1
+  alloca:
+    ports: "0156"
+    fu: INTALU
+    opcode_num: 31
+    runtime_cycles: 1
+  load:
+    ports: 1*23
+    fu: LU
+    opcode_num: 32
+    runtime_cycles: 5
+  store:
+    ports: 1*4
+    fu: SU
+    opcode_num: 33
+    runtime_cycles: 1
+  getelementptr: # use add? 
+    ports: 1*237
+    fu: AGU
+    opcode_num: 34
+    runtime_cycles: 1
+  # fence:
+  #   ports: "012"
+  #   opcode_num: 35
+  #   runtime_cycles: 0
+  trunc:
+    ports: "0156"
+    fu: INTALU
+    opcode_num: 38
+    runtime_cycles: 1
+  zext:
+    ports: "0156"
+    fu: INTALU
+    opcode_num: 39
+    runtime_cycles: 0
+  sext:
+    ports: "0156"
+    fu: INTALU
+    opcode_num: 40
+    runtime_cycles: 0
+  fptoui:
+    ports: 1*0+1*1
+    fu: 
+      - INTALU+FPALU
+    opcode_num: 41
+    runtime_cycles: 4
+  fptosi:
+    ports: 1*0+1*1
+    fu: 
+      - INTALU+FPALU
+    opcode_num: 42
+    runtime_cycles: 2
+  uitofp:
+    ports: 1*5+1*1
+    fu: 
+      - INTALU+FPALU
+    opcode_num: 43
+    runtime_cycles: 4
+  sitofp:
+    ports: 1*5+1*1
+    fu: 
+      - INTALU+FPALU
+    opcode_num: 44
+    runtime_cycles: 4
+  fptrunc:
+    ports: 1*5+1*1 #cvtsd2ss
+    fu:
+      - INTALU+FPALU
+    opcode_num: 45
+    runtime_cycles: 4
+  fpext: 
+    ports: 1*5+1*1 # cvtss2sd
+    fu:
+      - INTALU+FPALU
+    opcode_num: 46
+    runtime_cycles: 2
+  ptrtoint: #like mov
+    ports: "0156"
+    fu: INTALU
+    opcode_num: 47
+    runtime_cycles: 1
+  inttoptr:
+    ports: "0156"
+    fu: INTALU
+    opcode_num: 48
+    runtime_cycles: 1
+  bitcast: # like mov?
+    ports: "0156"
+    fu: INTALU
+    opcode_num: 49
+    runtime_cycles: 1
+  # addrspacecast:
+  #   ports: "0156"
+  #   opcode_num: 50
+  #   runtime_cycles: 0
+  icmp:
+    ports: "0156"
+    fu: INTALU
+    opcode_num: 53
+    runtime_cycles: 1
+  fcmp:
+    ports: "1"
+    fu:
+      - FPALU
+    opcode_num: 54
+    runtime_cycles: 1
+  phi: #treat it as mov
+    ports: "0156"
+    fu: INTALU
+    opcode_num: 55
+    runtime_cycles: 1
+  call:
+    ports: 1*4+1*237+1*06+1*0156
+    fu: 
+      - SU+AGU+INTALU+INTALU
+    opcode_num: 56
+    runtime_cycles: 3
+  select:
+    ports: 2*0156 # do it as a compare and a move
+    fu: INTALU
+    opcode_num: 57
+    runtime_cycles: 2
+  # vaarg:
+  #   ports: INTALU
+  #   opcode_num: 60
+  #   runtime_cycles: 0
+  # landingpad:
+  #   functional_unit: 0
+  #   opcode_num: 66
+  #   runtime_cycles: 0
+  extractvalue:
+    ports: 1*0156
+    fu: INTALU
+    opcode_num: 64
+    runtime_cycles: 1
+  insertvalue:
+    ports: 1*0156
+    fu: INTALU
+    opcode_num: 65
+    runtime_cycles: 1

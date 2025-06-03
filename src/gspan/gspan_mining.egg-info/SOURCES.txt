@@ -1,0 +1,13 @@
+LICENSE
+README.md
+setup.py
+gspan_mining/__init__.py
+gspan_mining/__main__.py
+gspan_mining/config.py
+gspan_mining/graph.py
+gspan_mining/gspan.py
+gspan_mining/main.py
+gspan_mining.egg-info/PKG-INFO
+gspan_mining.egg-info/SOURCES.txt
+gspan_mining.egg-info/dependency_links.txt
+gspan_mining.egg-info/top_level.txt
