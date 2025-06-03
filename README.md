@@ -65,7 +65,6 @@ make -j
 		- run_shells 
 			- mining.sh # shells for iterative searching
 			- mining_ino.sh # for IO GPP
-	- MachSuite -> Benchmarks for standalone test
 
 # Custom Instruction Exploration
 
@@ -136,7 +135,7 @@ CIExplorer/auto
 
 ## Steps:
 
-1. To use these shells you should first compile the simulator in https://github.com/charlieisacat/CISim.
+1. To use these shells you should first build the simulator in https://github.com/charlieisacat/CISim.
 
 2. Specify correct paths in auto/config.py:
 
