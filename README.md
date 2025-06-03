@@ -1,7 +1,8 @@
 # CIExplorer: Microarchitecture-Aware Exploration for Tightly Integrated Custom InstructionCIExplorer (ICS'25)
 
 ## Citation
-To Update
+> Xiaoyu Hao, Sen Zhang, Liang Qiao, Qingcai Jiang, Jun Shi, Junshi Chen, Hong An, Xulong Tang, Hao Shu, and Honghui Yuan. 
+> CIExplorer: Microarchitecture-Aware Exploration for Tightly Integrated Custom Instruction. In 2025 International Conference on Supercomputing (ICS ’25)
 
 # Requirements & Setup
 - LLVM-14
@@ -126,6 +127,14 @@ Discovered CIs are visualzied automatically and images can be found in:
 
 
 # Simulation
+
+We provide shells to perform the exploration and simualtion end-to-end.
+
+```bash
+CIExplorer/auto
+```
+
+## Steps:
 
 1. To use these shells you should first compile the simulator in https://github.com/charlieisacat/CISim.
 
