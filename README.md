@@ -1,4 +1,4 @@
-# CIExplorer: Microarchitecture-Aware Exploration for Tightly Integrated Custom InstructionCIExplorer (ICS'25)
+# CIExplorer: Microarchitecture-Aware Exploration for Tightly Integrated Custom Instruction (ICS'25)
 
 ## Citation
 > Xiaoyu Hao, Sen Zhang, Liang Qiao, Qingcai Jiang, Jun Shi, Junshi Chen, Hong An, Xulong Tang, Hao Shu, and Honghui Yuan. 
